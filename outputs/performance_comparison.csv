@@ -1,0 +1,5 @@
+Algorithm,Goal reached,Path length (moves),Total path cost,Nodes expanded,Execution time (ms)
+BFS,True,22,22,159,0.263867
+DFS,True,56,71,95,0.154733
+Greedy Best-First,True,22,22,23,0.064607
+A*,True,22,22,42,0.159741
