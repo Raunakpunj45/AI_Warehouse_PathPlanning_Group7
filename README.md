@@ -121,4 +121,5 @@ Before submission, fill all team placeholders and paste the actual GitHub reposi
 | Raunak Punj | BT24CSD035 | A* and weighted path costs |
 | Om Bawankule | BT24CSD017 | Trolley detection and replanning |
 
-See `docs/TEAM_DETAILS.md` for the contribution record. Add the final repository URL and representative contact details before emailing the instructor.
+See `docs/TEAM_DETAILS.md` for the contribution record. https://github.com/Raunakpunj45/AI_Warehouse_PathPlanning_Group7 and Representative contact details - bt24csd035@iiitn.ac.in
+
