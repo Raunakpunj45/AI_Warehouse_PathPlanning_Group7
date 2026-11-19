@@ -15,6 +15,26 @@ python main.py
 
 The complete console demonstration is also saved to `outputs/run_output.txt`.
 
+## Web UI and visual version
+The folder [`AI_Warehouse_PathPlanning_UI/`](AI_Warehouse_PathPlanning_UI/) holds an interactive browser
+version of the project, plus a script that saves figures and animations of the results.
+
+```bash
+cd AI_Warehouse_PathPlanning_UI
+python server.py        # opens http://127.0.0.1:8000 in your browser
+```
+
+- **Compare algorithms:** pick a preset or paint your own warehouse, run BFS, DFS, Greedy
+  and A\*, and compare their routes and metrics side by side.
+- **Trolley & replanning:** watch the robot follow its plan, detect a trolley one cell ahead,
+  update its map and replan with A\*.
+
+The web UI uses only Python's standard library. To create the figures, GIFs and CSV tables
+in `AI_Warehouse_PathPlanning_UI/outputs/`, install `numpy` and `matplotlib`
+(`pip install -r AI_Warehouse_PathPlanning_UI/requirements.txt`) and run `python main.py`
+inside that folder. The web UI and figure script need Python 3.10 or newer. See
+[`AI_Warehouse_PathPlanning_UI/README.md`](AI_Warehouse_PathPlanning_UI/README.md) for full details.
+
 ## Run each member's module separately
 ```bash
 python member1_environment.py
@@ -81,6 +101,13 @@ AI_Warehouse_Route_Planning/
 ├── docs/
 │   ├── MEMBER_WORK_EXPLANATION.md
 │   └── PROJECT_REPORT.md
+├── AI_Warehouse_PathPlanning_UI/   # web UI + figures/animations
+│   ├── server.py
+│   ├── main.py
+│   ├── warehouse_robot/
+│   ├── web/
+│   ├── tests/
+│   └── outputs/
 └── requirements.txt
 ```
 
@@ -94,8 +121,8 @@ AI_Warehouse_Route_Planning/
 
 ## Limitations / extension
 The environment is a deterministic simulation. The trolley is a single newly
-discovered static obstacle. The optional GUI/animation is not required for the
-core assignment and can be added later.
+discovered static obstacle. An optional web UI and animations, which the core
+assignment does not require, are in `AI_Warehouse_PathPlanning_UI/`.
 
 
 ## Submission evidence
