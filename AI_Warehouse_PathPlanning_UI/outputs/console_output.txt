@@ -1,0 +1,204 @@
+
+==============================================================================
+  TASK 1 - WAREHOUSE ENVIRONMENT
+==============================================================================
+Grid size: 9 rows x 15 columns | start S = (3, 0) | goal G = (3, 14)
+Moves: Up, Down, Left, Right | entering normal cell = 1, crowded cell = 4
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+    +------------------------------+
+  0 |. . . . . . . . . . . . . . . |
+  1 |. # # . # # # # . # # # # . . |
+  2 |. # # . # # # # . # # # # . R |
+  3 |S . . . C C C C C C C . . . G |
+  4 |. # # . # # # . # # # # # . R |
+  5 |. # # . # # # . # # # # # . . |
+  6 |. . . C . . . R R R . . . . . |
+  7 |. # # . # # . . . . . # # . . |
+  8 |. . . . . # . . C . . # . . . |
+    +------------------------------+
+Legend: S=start  G=goal  .=open(1)  C=crowded(4)  #=shelf  R=restricted  T=trolley  *=route  o=route through crowded cell  X=robot
+
+==============================================================================
+  TASK 2 - PROBLEM FORMULATION
+==============================================================================
+State            : robot position (row, col)
+Initial state    : (3, 0)  (packing station S)
+Actions(s)       : legal moves among Up/Down/Left/Right, e.g. Actions(3, 0) = ['Up', 'Down', 'Right']
+Transition model : Result(s, a) = s + delta(a)  e.g. Result((3, 0), 'Right') = (3, 1)
+Goal test        : s == (3, 14)  (dispatch area G)
+Path cost        : sum of costs of cells entered (open = 1, crowded = 4)
+Heuristic        : Manhattan distance, h(S) = 14
+
+==============================================================================
+  TASK 3 - SEARCH ALGORITHMS (BFS, DFS, GREEDY BEST-FIRST, A*)
+==============================================================================
+
+--- BFS ---
+Route found: 14 moves, total cost 35, 64 nodes expanded
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+    +------------------------------+
+  0 |. . . . . . . . . . . . . . . |
+  1 |. # # . # # # # . # # # # . . |
+  2 |. # # . # # # # . # # # # . R |
+  3 |S * * * o o o o o o o * * * G |
+  4 |. # # . # # # . # # # # # . R |
+  5 |. # # . # # # . # # # # # . . |
+  6 |. . . C . . . R R R . . . . . |
+  7 |. # # . # # . . . . . # # . . |
+  8 |. . . . . # . . C . . # . . . |
+    +------------------------------+
+Route: (3,0) -> (3,1) -> (3,2) -> (3,3) -> (3,4) -> (3,5) -> (3,6) -> (3,7) -> (3,8) -> (3,9) -> (3,10) -> (3,11) -> (3,12) -> (3,13) -> (3,14)
+
+--- DFS ---
+Route found: 32 moves, total cost 38, 72 nodes expanded
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+    +------------------------------+
+  0 |* * * * . . . . . . . . . . . |
+  1 |* # # * # # # # . # # # # . . |
+  2 |* # # * # # # # . # # # # . R |
+  3 |S . . * C C C C C C C . . * G |
+  4 |. # # * # # # . # # # # # * R |
+  5 |. # # * # # # . # # # # # * . |
+  6 |. . . o * * * R R R * * * * . |
+  7 |. # # . # # * * * * * # # . . |
+  8 |. . . . . # * * o * . # . . . |
+    +------------------------------+
+Route: (3,0) -> (2,0) -> (1,0) -> (0,0) -> (0,1) -> (0,2) -> (0,3) -> (1,3) -> (2,3) -> (3,3) -> (4,3) -> (5,3) -> (6,3) -> (6,4) -> (6,5) -> (6,6) -> (7,6) -> (8,6) -> (8,7) -> (7,7) -> (7,8) -> (8,8) -> (8,9) -> (7,9) -> (7,10) -> (6,10) -> (6,11) -> (6,12) -> (6,13) -> (5,13) -> (4,13) -> (3,13) -> (3,14)
+
+--- Greedy Best-First ---
+Route found: 14 moves, total cost 35, 15 nodes expanded
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+    +------------------------------+
+  0 |. . . . . . . . . . . . . . . |
+  1 |. # # . # # # # . # # # # . . |
+  2 |. # # . # # # # . # # # # . R |
+  3 |S * * * o o o o o o o * * * G |
+  4 |. # # . # # # . # # # # # . R |
+  5 |. # # . # # # . # # # # # . . |
+  6 |. . . C . . . R R R . . . . . |
+  7 |. # # . # # . . . . . # # . . |
+  8 |. . . . . # . . C . . # . . . |
+    +------------------------------+
+Route: (3,0) -> (3,1) -> (3,2) -> (3,3) -> (3,4) -> (3,5) -> (3,6) -> (3,7) -> (3,8) -> (3,9) -> (3,10) -> (3,11) -> (3,12) -> (3,13) -> (3,14)
+
+--- A* ---
+Route found: 20 moves, total cost 20, 31 nodes expanded
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+    +------------------------------+
+  0 |. . . * * * * * * * * * * * . |
+  1 |. # # * # # # # . # # # # * . |
+  2 |. # # * # # # # . # # # # * R |
+  3 |S * * * C C C C C C C . . * G |
+  4 |. # # . # # # . # # # # # . R |
+  5 |. # # . # # # . # # # # # . . |
+  6 |. . . C . . . R R R . . . . . |
+  7 |. # # . # # . . . . . # # . . |
+  8 |. . . . . # . . C . . # . . . |
+    +------------------------------+
+Route: (3,0) -> (3,1) -> (3,2) -> (3,3) -> (2,3) -> (1,3) -> (0,3) -> (0,4) -> (0,5) -> (0,6) -> (0,7) -> (0,8) -> (0,9) -> (0,10) -> (0,11) -> (0,12) -> (0,13) -> (1,13) -> (2,13) -> (3,13) -> (3,14)
+
+Legend: S=start  G=goal  .=open(1)  C=crowded(4)  #=shelf  R=restricted  T=trolley  *=route  o=route through crowded cell  X=robot
+
+Why Manhattan distance is a lower bound on the remaining travel cost:
+  * Each move changes the row OR the column by exactly 1, so reaching G needs at
+    least |dr| + |dc| moves, whatever obstacles are in the way.
+  * Every move costs at least 1 (open = 1, crowded = 4).
+  => remaining cost >= number of moves >= Manhattan distance, so h never
+     overestimates (admissible). It is also consistent: h(n) <= c(n,n') + h(n').
+
+Short crowded route vs. longer, less costly route:
+  NO - the shortest route was NOT the cheapest. BFS found the fewest moves (14 moves) but it crosses crowded cells, so it costs 35. A* took 20 moves (6 more) but its cost is only 20 (15 less), because it avoids the crowded aisle.
+
+==============================================================================
+  TASK 4 - TROLLEY DETECTION AND REPLANNING
+==============================================================================
+Experiment A - trolley placed ON the initial A* route at (0, 7).
+The trolley is in the TRUE map but NOT in the robot's known map.
+
+Robot's known map with its original A* route:
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+    +------------------------------+
+  0 |. . . * * * * * * * * * * * . |
+  1 |. # # * # # # # . # # # # * . |
+  2 |. # # * # # # # . # # # # * R |
+  3 |S * * * C C C C C C C . . * G |
+  4 |. # # . # # # . # # # # # . R |
+  5 |. # # . # # # . # # # # # . . |
+  6 |. . . C . . . R R R . . . . . |
+  7 |. # # . # # . . . . . # # . . |
+  8 |. . . . . # . . C . . # . . . |
+    +------------------------------+
+
+  > Initial A* plan from (3, 0): 20 moves, cost 20.
+  > Robot at (0, 6): obstacle ('T') detected at (0, 7). Map updated -> replanning with A* (replan #1).
+  > New plan from (0, 6): 25 moves, cost 28.
+  > Goal reached after 34 moves with 1 replan(s).
+
+True map with the route actually driven (X marks where the trolley was detected):
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+    +------------------------------+
+  0 |. . . * * * X T . . . . . . . |
+  1 |. # # * # # # # . # # # # . . |
+  2 |. # # * # # # # . # # # # . R |
+  3 |S * * * C C C C C C C . . * G |
+  4 |. # # * # # # . # # # # # * R |
+  5 |. # # * # # # . # # # # # * . |
+  6 |. . . o * * * R R R * * * * . |
+  7 |. # # . # # * * * * * # # . . |
+  8 |. . . . . # . . C . . # . . . |
+    +------------------------------+
+
+Experiment B - single-corridor warehouse, trolley at (3, 7) (no alternative route).
+     0 1 2 3 4 5 6 7 8 9 0
+    +----------------------+
+  0 |S * * * * # # # # # # |
+  1 |# # # # * # # # # # # |
+  2 |# # # # * R R R R # # |
+  3 |# # # # * * * * * * G |
+    +----------------------+
+
+  > Initial A* plan from (0, 0): 13 moves, cost 13.
+  > Robot at (3, 6): obstacle ('T') detected at (3, 7). Map updated -> replanning with A* (replan #1).
+  > Replanning FAILED at (3, 6): no alternative route to the goal exists. Robot stops safely.
+     0 1 2 3 4 5 6 7 8 9 0
+    +----------------------+
+  0 |S * * * * # # # # # # |
+  1 |# # # # * # # # # # # |
+  2 |# # # # * R R R R # # |
+  3 |# # # # * * X T . . G |
+    +----------------------+
+
+Creating animations (outputs/*.gif) ...
+
+==============================================================================
+  TASK 5 - PERFORMANCE EVALUATION
+==============================================================================
+Algorithm comparison on the main warehouse (time = average of 30 runs):
++-------------------+--------------+---------------------+-----------------+----------------+---------------------+
+| Algorithm         | Goal reached | Path length (moves) | Total path cost | Nodes expanded | Execution time (ms) |
++===================+==============+=====================+=================+================+=====================+
+| BFS               | Yes          | 14                  | 35              | 64             | 0.103               |
+| DFS               | Yes          | 32                  | 38              | 72             | 0.134               |
+| Greedy Best-First | Yes          | 14                  | 35              | 15             | 0.032               |
+| A*                | Yes          | 20                  | 20              | 31             | 0.070               |
++-------------------+--------------+---------------------+-----------------+----------------+---------------------+
+
+Trolley experiments (A* with replanning; nodes expanded summed over all plans):
++------------------------+--------------+---------------------+-----------------+----------------+---------------------+---------+
+| Scenario               | Goal reached | Path length (moves) | Total path cost | Nodes expanded | Execution time (ms) | Replans |
++========================+==============+=====================+=================+================+=====================+=========+
+| A: trolley on A* route | Yes          | 34                  | 37              | 70             | 0.216               | 1       |
+| B: dead-end corridor   | No           | 9                   | 9               | 24             | 0.083               | 1       |
++------------------------+--------------+---------------------+-----------------+----------------+---------------------+---------+
+
+Findings:
+  * NO - the shortest route was NOT the cheapest. BFS found the fewest moves (14 moves) but it crosses crowded cells, so it costs 35. A* took 20 moves (6 more) but its cost is only 20 (15 less), because it avoids the crowded aisle.
+  * A* returned the lowest-cost route; Greedy expanded the fewest nodes but followed h blindly into the crowded aisle.
+  * DFS found a route but it is long and costly - DFS is neither shortest nor cheapest.
+  * With the trolley, the robot replanned 1 time(s) and still reached G (cost 37 vs. 20 planned).
+  * In the dead-end warehouse replanning correctly reported that no route exists.
+
+==============================================================================
+  DONE
+==============================================================================
+All figures, tables and this console log are saved in: /home/claude/AI_Warehouse_PathPlanning_GroupXX/outputs

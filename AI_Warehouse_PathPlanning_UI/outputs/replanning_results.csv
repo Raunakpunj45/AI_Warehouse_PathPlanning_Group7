@@ -1,0 +1,3 @@
+Scenario,Goal reached,Path length (moves),Total path cost,Nodes expanded,Execution time (ms),Replans
+A: trolley on A* route,Yes,34,37,70,0.216,1
+B: dead-end corridor,No,9,9,24,0.083,1
