@@ -40,7 +40,7 @@ Our task is to develop a simulated delivery robot that searches for a route on a
 ## 2. Project structure
 
 ```
-AI_Warehouse_PathPlanning_GroupXX/
+AI_Warehouse_PathPlanning_UI/
 ├── main.py                     # runs all 5 tasks, prints results, saves outputs
 ├── server.py                   # web UI backend (Python standard library only)
 ├── web/                        # web UI frontend: index.html, style.css, app.js
@@ -67,8 +67,8 @@ AI_Warehouse_PathPlanning_GroupXX/
 
 ```bash
 # 1. Get the code
-git clone https://github.com/<username>/AI_Warehouse_PathPlanning_GroupXX.git
-cd AI_Warehouse_PathPlanning_GroupXX
+git clone https://github.com/Raunakpunj45/AI_Warehouse_PathPlanning_Group7.git
+cd AI_Warehouse_PathPlanning_Group7/AI_Warehouse_PathPlanning_UI
 
 # 2. (Optional) create a virtual environment
 python -m venv venv
